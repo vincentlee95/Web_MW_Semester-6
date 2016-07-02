@@ -9,10 +9,7 @@ var Lob           = require('lob')(config.lob_api_key);
 Bluebird.promisifyAll(instagramApi);
 
 
-/* Index Page
- * IF the instagram cookie is present, show the app
- * ELSE show an Instagram login button
- */
+
 router.get('/', function (req, res) {
 
   if (req.cookies.instaToken) {
@@ -43,7 +40,7 @@ router.get('/', function (req, res) {
   }
 });
 
-/* Redirect user to Instagram for authentication */
+
 router.get('/authorize-user', function (req, res) {
   instagramApi.use({
     client_id: config.instagram_client_id,
@@ -52,7 +49,7 @@ router.get('/authorize-user', function (req, res) {
   res.redirect(instagramApi.get_authorization_url(config.instagram_redirect_uri));
 });
 
-/* Set cookie once Instagram sends access code */
+
 router.get('/handleauth', function (req, res) {
   instagramApi.authorize_userAsync(req.query.code, config.instagram_redirect_uri)
   .then(function (result) {
@@ -65,7 +62,7 @@ router.get('/handleauth', function (req, res) {
 });
 
 
-/* Create Postcard and Send it to Lob */
+
 router.post('/create-postcard', function (req, res) {
 
   var postcardTemplate = fs.readFileSync(__dirname + '/postcard.html').toString();
