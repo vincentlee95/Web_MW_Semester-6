@@ -42,3 +42,61 @@ router.get('/', function (req, res) {
     });
   }
 });
+
+/* Redirect user to Instagram for authentication */
+router.get('/authorize-user', function (req, res) {
+  instagramApi.use({
+    client_id: config.instagram_client_id,
+    client_secret: config.instagram_client_secret
+  });
+  res.redirect(instagramApi.get_authorization_url(config.instagram_redirect_uri));
+});
+
+/* Set cookie once Instagram sends access code */
+router.get('/handleauth', function (req, res) {
+  instagramApi.authorize_userAsync(req.query.code, config.instagram_redirect_uri)
+  .then(function (result) {
+    res.cookie('instaToken',result.access_token, { maxAge: 900000, httpOnly: true });
+    res.redirect('/');
+  })
+  .catch(function (errors) {
+    console.log(errors);
+  });
+});
+
+
+/* Create Postcard and Send it to Lob */
+router.post('/create-postcard', function (req, res) {
+
+  var postcardTemplate = fs.readFileSync(__dirname + '/postcard.html').toString();
+
+  return Lob.addresses.create({
+    name: req.body.name,
+    address_line1: req.body.address,
+    address_city: req.body.city,
+    address_state: req.body.state,
+    address_zip: req.body.zip,
+    address_country: 'US',
+  })
+  .then(function (address) {
+    return Lob.postcards.create({
+      description: 'Instagram Postcard Demo',
+      to: address.id,
+      front: postcardTemplate,
+      message: req.body.message,
+      data: {
+        image1: req.body.image1,
+        image2: req.body.image2,
+        image3: req.body.image3
+      }
+    });
+  })
+  .then(function (postcard) {
+    res.render('complete', { url: postcard.url });
+  })
+  .catch(function (errors){
+    res.render('complete', { error: errors.message });
+  });
+});
+
+module.exports = router;
