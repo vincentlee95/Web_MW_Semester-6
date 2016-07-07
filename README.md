@@ -1,3 +1,13 @@
+#Nama anggota
+
+131110445 - Frandy Sultanto
+
+131110801 - Andrian
+
+131111297 - Edric Yawin
+
+131110372 - Vincent
+
 # Photocard	
 ...
 Aplikasi web yang memungkinkan pengguna membuat kartu dengan foto-foto yang sudah ada di Instagram pengguna, didownload, ataupun di print.
@@ -16,7 +26,9 @@ klik masuk ke Instagram.
 
 ( disini kami menyediakan sebuah user Instagram untuk digunakan )
 
-Klik authorize.
+Masukkan nama pengguna : babit1506
+
+Masukkan kata sandi : gengcabut
 
 ...
 
