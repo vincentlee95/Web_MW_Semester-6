@@ -5,7 +5,10 @@ Aplikasi web yang memungkinkan pengguna membuat kartu dengan foto-foto yang suda
 
 # Run
 ...
-node index.js
+
+jalankan npm install
+
+kemudian jalankan node index.js
 
 masukkan localhost:3000 di browser.
 
