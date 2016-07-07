@@ -1,4 +1,4 @@
-#Nama anggota
+#Nama anggota (MW Sore)
 
 131110445 - Frandy Sultanto
 
